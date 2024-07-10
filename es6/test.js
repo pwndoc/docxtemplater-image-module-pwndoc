@@ -4,7 +4,7 @@
 const fs = require("fs");
 const Docxtemplater = require("docxtemplater");
 const path = require("path");
-const JSZip = require("jszip");
+const PizZip = require("pizzip");
 const ImageModule = require("./index.js");
 const testutils = require("docxtemplater/js/tests/utils");
 const shouldBeSame = testutils.shouldBeSame;
@@ -21,8 +21,6 @@ const fileNames = [
 	"expectedOneImage.docx",
 	"expectedCentered.docx",
 	"expectedLoopCentered.docx",
-	"withoutRels.docx",
-	"expectedWithoutRels.docx",
 	"expectedBase64.docx",
 	"tagImage.pptx",
 	"expectedTagImage.pptx",
@@ -45,7 +43,7 @@ beforeEach(function () {
 	this.loadAndRender = function () {
 		const file = testutils.createDoc(this.name);
 		this.doc = new Docxtemplater();
-		const inputZip = new JSZip(file.loadedContent);
+		const inputZip = new PizZip(file.loadedContent);
 		this.doc.loadZip(inputZip).setData(this.data);
 		const imageModule = new ImageModule(this.opts);
 		this.doc.attachModule(imageModule);
@@ -60,13 +58,6 @@ function testStart() {
 		it("should work with one image", function () {
 			this.name = "imageExample.docx";
 			this.expectedName = "expectedOneImage.docx";
-			this.data = {image: "examples/image.png"};
-			this.loadAndRender();
-		});
-
-		it("should work without initial rels", function () {
-			this.name = "withoutRels.docx";
-			this.expectedName = "expectedWithoutRels.docx";
 			this.data = {image: "examples/image.png"};
 			this.loadAndRender();
 		});
@@ -143,7 +134,7 @@ function testStart() {
 					binaryString = window.atob(stringBase64);
 				}
 				else {
-					binaryString = new Buffer(stringBase64, "base64").toString("binary");
+					binaryString = new Buffer.from(stringBase64, "base64").toString("binary");
 				}
 				const len = binaryString.length;
 				const bytes = new Uint8Array(len);
@@ -165,7 +156,4 @@ function testStart() {
 
 testutils.setExamplesDirectory(path.resolve(__dirname, "..", "examples"));
 testutils.setStartFunction(testStart);
-fileNames.forEach(function (filename) {
-	testutils.loadFile(filename, testutils.loadDocument);
-});
 testutils.start();

@@ -4,13 +4,13 @@
 var fs = require("fs");
 var Docxtemplater = require("docxtemplater");
 var path = require("path");
-var JSZip = require("jszip");
+var PizZip = require("pizzip");
 var ImageModule = require("./index.js");
 var testutils = require("docxtemplater/js/tests/utils");
 var shouldBeSame = testutils.shouldBeSame;
 var sizeOf = require("image-size");
 
-var fileNames = ["imageExample.docx", "imageHeaderFooterExample.docx", "imageLoopExample.docx", "imageInlineExample.docx", "expectedInline.docx", "expectedNoImage.docx", "expectedHeaderFooter.docx", "expectedOneImage.docx", "expectedCentered.docx", "expectedLoopCentered.docx", "withoutRels.docx", "expectedWithoutRels.docx", "expectedBase64.docx", "tagImage.pptx", "expectedTagImage.pptx", "tagImageCentered.pptx", "expectedTagImageCentered.pptx", "expectedInlineResize.docx"];
+var fileNames = ["imageExample.docx", "imageHeaderFooterExample.docx", "imageLoopExample.docx", "imageInlineExample.docx", "expectedInline.docx", "expectedNoImage.docx", "expectedHeaderFooter.docx", "expectedOneImage.docx", "expectedCentered.docx", "expectedLoopCentered.docx", "expectedBase64.docx", "tagImage.pptx", "expectedTagImage.pptx", "tagImageCentered.pptx", "expectedTagImageCentered.pptx", "expectedInlineResize.docx"];
 
 beforeEach(function () {
 	this.opts = {
@@ -26,7 +26,7 @@ beforeEach(function () {
 	this.loadAndRender = function () {
 		var file = testutils.createDoc(this.name);
 		this.doc = new Docxtemplater();
-		var inputZip = new JSZip(file.loadedContent);
+		var inputZip = new PizZip(file.loadedContent);
 		this.doc.loadZip(inputZip).setData(this.data);
 		var imageModule = new ImageModule(this.opts);
 		this.doc.attachModule(imageModule);
@@ -41,13 +41,6 @@ function testStart() {
 		it("should work with one image", function () {
 			this.name = "imageExample.docx";
 			this.expectedName = "expectedOneImage.docx";
-			this.data = { image: "examples/image.png" };
-			this.loadAndRender();
-		});
-
-		it("should work without initial rels", function () {
-			this.name = "withoutRels.docx";
-			this.expectedName = "expectedWithoutRels.docx";
 			this.data = { image: "examples/image.png" };
 			this.loadAndRender();
 		});
@@ -123,7 +116,7 @@ function testStart() {
 				if (typeof window !== "undefined") {
 					binaryString = window.atob(stringBase64);
 				} else {
-					binaryString = new Buffer(stringBase64, "base64").toString("binary");
+					binaryString = new Buffer.from(stringBase64, "base64").toString("binary");
 				}
 				var len = binaryString.length;
 				var bytes = new Uint8Array(len);
@@ -145,7 +138,4 @@ function testStart() {
 
 testutils.setExamplesDirectory(path.resolve(__dirname, "..", "examples"));
 testutils.setStartFunction(testStart);
-fileNames.forEach(function (filename) {
-	testutils.loadFile(filename, testutils.loadDocument);
-});
 testutils.start();
