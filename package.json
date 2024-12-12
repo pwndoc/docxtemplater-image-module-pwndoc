@@ -15,28 +15,28 @@
     "uglify": "uglifyjs build/imagemodule.js > build/imagemodule.min.js"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-eslint": "^7.1.1",
-    "babel-preset-es2015": "^6.3.13",
-    "browserify": "^14.0.0",
-    "chai": "^3.4.1",
-    "docxtemplater": "^3.0.0",
-    "eslint": "^3.15.0",
-    "image-size": "^0.5.1",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-es2015": "^6.24.1",
+    "browserify": "^17.0.1",
+    "chai": "^5.1.2",
+    "docxtemplater": "^3.55.5",
+    "eslint": "^9.16.0",
+    "image-size": "^1.1.1",
     "istanbul": "^0.4.5",
-    "jszip": "^2.6.1",
-    "mkdirp": "^0.5.1",
-    "mocha": "^3.2.0",
-    "rimraf": "^2.5.4",
-    "uglifyjs": "^2.4.10"
+    "jszip": "^3.10.1",
+    "mkdirp": "^3.0.1",
+    "mocha": "^11.0.1",
+    "rimraf": "^6.0.1",
+    "uglifyjs": "^2.4.11"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pwndoc/docxtemplater-image-module-pwndoc"
+    "url": "https://github.com/Chapizze/docxtemplater-image-module-pwndoc"
   },
-  "author": "yeln4ts",
+  "author": "yeln4ts - Chapizze",
   "license": "MIT",
   "dependencies": {
-    "xmldom": "^0.1.27"
+    "@xmldom/xmldom": "^0.8.4"
   }
 }
