@@ -2,7 +2,7 @@
 
 const templates = require("./templates");
 const DocUtils = require("docxtemplater").DocUtils;
-const DOMParser = require("xmldom").DOMParser;
+const DOMParser = require("@xmldom/xmldom").DOMParser;
 
 function isNaN(number) {
 	return !(number === number);
