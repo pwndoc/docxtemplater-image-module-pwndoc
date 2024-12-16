@@ -2,7 +2,7 @@
 
 const templates = require("./templates");
 const DocUtils = require("docxtemplater").DocUtils;
-const DOMParser = require("xmldom").DOMParser;
+const DOMParser = require("@xmldom/xmldom").DOMParser;
 
 function isNaN(number) {
 	return !(number === number);
@@ -101,7 +101,7 @@ class ImageModule {
 		if (!tagValue) {
 			return {value: this.fileTypeConfig.tagTextXml};
 		}
-		else if (typeof tagValue === "object") {
+		else if (typeof tagValue === "object" && !(tagValue instanceof ArrayBuffer)) {
 			return this.getRenderedPart(part, tagValue.rId, tagValue.sizePixel);
 		}
 		const imgManager = new ImgManager(this.zip, options.filePath, this.xmlDocuments, this.fileType);
