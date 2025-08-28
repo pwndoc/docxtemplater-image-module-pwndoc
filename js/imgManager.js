@@ -87,8 +87,7 @@ module.exports = function () {
 				return;
 			}
 			var types = contentTypeDoc.getElementsByTagName("Types")[0];
-			var newTag = contentTypeDoc.createElement("Default");
-			newTag.namespaceURI = null;
+			var newTag = contentTypeDoc.createElementNS("http://schemas.openxmlformats.org/package/2006/content-types", "Default");
 			newTag.setAttribute("ContentType", contentType);
 			newTag.setAttribute("Extension", extension);
 			types.appendChild(newTag);
@@ -117,8 +116,7 @@ module.exports = function () {
 			var extension = realImageName.replace(extensionRegex, "$1");
 			this.addExtensionRels("image/" + extension, extension);
 			var relationships = this.relsDoc.getElementsByTagName("Relationships")[0];
-			var newTag = this.relsDoc.createElement("Relationship");
-			newTag.namespaceURI = null;
+			var newTag = this.relsDoc.createElementNS("http://schemas.openxmlformats.org/package/2006/relationships", "Relationship");
 			var maxRid = this.loadImageRels() + 1;
 			newTag.setAttribute("Id", "rId" + maxRid);
 			newTag.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image");

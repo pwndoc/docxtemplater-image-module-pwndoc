@@ -32,7 +32,15 @@ function getInnerPptx(_ref2) {
 	var xmlString = postparsed.slice(left + 1, right).reduce(function (concat, item) {
 		return concat + item.value;
 	}, "");
-	var xmlDoc = new DOMParser().parseFromString("<xml>" + xmlString + "</xml>");
+	const namespaces = `
+	xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+	xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+	xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"
+	xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+	xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+	xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart"
+	`;
+	var xmlDoc = new DOMParser().parseFromString(`<xml ${namespaces}>${xmlString}</xml>`, 'text/xml');
 	part.offset = { x: 0, y: 0 };
 	part.ext = { cx: 0, cy: 0 };
 	var offset = xmlDoc.getElementsByTagName("a:off");
